@@ -1,9 +1,13 @@
 spring:
   ldap:
-    urls: ldap://localhost:10389
-    base: dc=planetexpress,dc=com
-    username: cn=admin,dc=planetexpress,dc=com
-    password: GoodNewsEveryone
+#    urls: ldap://localhost:10389
+#    base: dc=planetexpress,dc=com
+#    username: cn=admin,dc=planetexpress,dc=com
+#    password: GoodNewsEveryone
+    urls: ldap://192.168.1.101:389
+    base: dc=albee,dc=com
+    username: Administrator@albee.com
+    password: dba3048!01
   data:
     ldap:
       repositories:
@@ -24,4 +28,11 @@ spring:
 
 server:
   port: 8280
+
+winrm:
+  host: 192.168.1.101
+  port: 5985
+  username: Administrator
+  password: dba3048!01
+  timeout: 60000
 

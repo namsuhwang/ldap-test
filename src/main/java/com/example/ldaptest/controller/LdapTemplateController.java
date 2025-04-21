@@ -5,6 +5,7 @@ import com.example.ldaptest.models.dto.LdapUser;
 import com.example.ldaptest.models.form.GroupForm;
 import com.example.ldaptest.models.form.UserForm;
 import com.example.ldaptest.service.LdapTemplateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,17 +14,20 @@ import java.util.List;
 @RequestMapping("/ldap/template")
 public class LdapTemplateController {
 
-    private final LdapTemplateService ldapTemplateService;
-
-    public LdapTemplateController(LdapTemplateService ldapTemplateService) {
-        this.ldapTemplateService = ldapTemplateService;
-    }
+    @Autowired
+    private LdapTemplateService ldapTemplateService;
 
     @PostMapping("/user/get")
     public LdapUser getUser(
             @RequestBody UserForm userFrom
     ) {
         return ldapTemplateService.getAdUser(userFrom.getUserId());
+    }
+
+    @PostMapping("/user/get-all")
+    public List<LdapUser> getUser(
+    ) {
+        return ldapTemplateService.getAdAllUsers();
     }
 
     @PostMapping("/user/get-list-by-name")

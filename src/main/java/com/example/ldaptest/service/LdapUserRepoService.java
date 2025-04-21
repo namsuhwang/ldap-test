@@ -6,7 +6,6 @@ import com.example.ldaptest.repository.ldap.LdapUserRepository;
 import io.netty.util.internal.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQuery;
@@ -14,7 +13,6 @@ import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.stereotype.Service;
 
-import javax.naming.InvalidNameException;
 import javax.naming.Name;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;

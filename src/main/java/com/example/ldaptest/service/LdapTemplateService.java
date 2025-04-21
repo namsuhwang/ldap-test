@@ -12,10 +12,8 @@ import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.support.LdapNameBuilder;
 import org.springframework.stereotype.Service;
 
-import javax.naming.InvalidNameException;
 import javax.naming.Name;
 import javax.naming.directory.*;
-import javax.naming.ldap.LdapName;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +37,14 @@ public class LdapTemplateService {
         }
 
         Name dn = LdapNameBuilder.newInstance(userId).build();
-        String filter = "(objectClass=person)";
+
+        SearchControls searchControls = new SearchControls();
+        searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
         List<LdapUser> userList = ldapTemplate.search(
                 dn,
-                filter,
+                "(objectClass=user)",
+                searchControls,
             new LdapUserContextMapper()
         );
 
@@ -55,19 +57,29 @@ public class LdapTemplateService {
         return user;
     }
 
+    public List<LdapUser> getAdAllUsers() {
+
+        return ldapTemplate.search(
+                "cn=Users",  // 또는 OU=...
+                "objectClass=user",  // 사용자 필터
+                new LdapUserContextMapper()
+        );
+    }
+
     public List<LdapUser> getAdUsers(String userName) {
         String searchUser = StringUtil.isNullOrEmpty(userName) ? "*" : "*" + userName + "*";
-        String base = "ou=people";
-        String filter = "(&(objectClass=person)(cn=" + searchUser + "))";
+        String base = "cn=Users";
+        String filter = "(&(objectClass=user)(cn=" + searchUser + "))";
+
 
         SearchControls searchControls = new SearchControls();
         searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
         List<LdapUser> userList = ldapTemplate.search(
-            base,
-            filter,
-            searchControls,
-            new LdapUserContextMapper()
+                base,
+                filter,
+                searchControls,
+                new LdapUserContextMapper()
         );
 
         if(userList == null || userList.size() == 0){

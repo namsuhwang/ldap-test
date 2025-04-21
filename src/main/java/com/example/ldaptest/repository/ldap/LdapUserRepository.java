@@ -4,7 +4,6 @@ import com.example.ldaptest.models.entity.LdapUserEntity;
 import org.springframework.data.ldap.repository.LdapRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.naming.ldap.LdapName;
 import java.util.Optional;
 
 @Repository

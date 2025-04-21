@@ -22,7 +22,7 @@ public class LdapUserContextMapper implements ContextMapper<LdapUser> {
         user.setDn(context.getDn().toString());
         user.setCn((String) attrs.get("cn").get());
         user.setOu(attrs.get("ou") != null ? (String) attrs.get("ou").get() : null);
-        user.setSn((String) attrs.get("sn").get());
+        user.setSn((attrs.get("sn") != null ? (String) attrs.get("sn").get() : null));
         user.setUid((attrs.get("uid") != null ? (String) attrs.get("uid").get() : null));
         user.setMail(attrs.get("mail") != null ? (String) attrs.get("mail").get() : null);
         user.setDc(LdapUtil.extractDcFromContext(context));

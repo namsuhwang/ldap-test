@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.LdapTemplate;
 
-import javax.naming.NamingException;
-import javax.naming.directory.InitialDirContext;
-
 @Configuration
 public class LdapConfig {
 
