@@ -119,6 +119,13 @@
 		    <artifactId>jakarta.xml.soap-api</artifactId>
 		    <version>1.4.2</version>
 		</dependency>-->
+		<!-- start ssh -->
+		<dependency>
+		    <groupId>com.jcraft</groupId>
+		    <artifactId>jsch</artifactId>
+		    <version>0.1.55</version>
+		</dependency>
+		<!-- end ssh  -->
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

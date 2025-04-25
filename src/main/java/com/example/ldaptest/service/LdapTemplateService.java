@@ -38,13 +38,10 @@ public class LdapTemplateService {
 
         Name dn = LdapNameBuilder.newInstance(userId).build();
 
-        SearchControls searchControls = new SearchControls();
-        searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
         List<LdapUser> userList = ldapTemplate.search(
                 dn,
                 "(objectClass=user)",
-                searchControls,
+                SearchControls.SUBTREE_SCOPE,
             new LdapUserContextMapper()
         );
 
@@ -68,17 +65,11 @@ public class LdapTemplateService {
 
     public List<LdapUser> getAdUsers(String userName) {
         String searchUser = StringUtil.isNullOrEmpty(userName) ? "*" : "*" + userName + "*";
-        String base = "cn=Users";
-        String filter = "(&(objectClass=user)(cn=" + searchUser + "))";
-
-
-        SearchControls searchControls = new SearchControls();
-        searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
         List<LdapUser> userList = ldapTemplate.search(
-                base,
-                filter,
-                searchControls,
+                "cn=Users",                                   // base
+                "(&(objectClass=user)(cn=" + searchUser + "))",     // filter
+                SearchControls.SUBTREE_SCOPE,
                 new LdapUserContextMapper()
         );
 
@@ -99,10 +90,11 @@ public class LdapTemplateService {
         }
 
         Name dn = LdapNameBuilder.newInstance(groupId).build();
-        String filter = "(objectClass=group)";
+
         List<LdapGroup> groupList = ldapTemplate.search(
                 dn,
-                filter,
+                "(objectClass=group)",
+                SearchControls.SUBTREE_SCOPE,
             new LdapGroupContextMapper()
         );
 
@@ -114,18 +106,22 @@ public class LdapTemplateService {
         return group;
     }
 
+    public List<LdapGroup> getAdAllGroups() {
+
+        return ldapTemplate.search(
+                "cn=Users",  // 또는 OU=...
+                "objectClass=group",  // 사용자 필터
+                new LdapGroupContextMapper()
+        );
+    }
+
     public List<LdapGroup> getAdGroups(String groupName) {
         String searchGroup = StringUtil.isNullOrEmpty(groupName) ? "*" : "*" + groupName + "*";
-        String base = "ou=people";
-        String filter = "(&(objectClass=group)(cn=" + searchGroup + "))";
-
-        SearchControls searchControls = new SearchControls();
-        searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
         List<LdapGroup> groupList = ldapTemplate.search(
-                base,
-                filter,
-                searchControls,
+                "cn=Users",                                  // base
+                "(&(objectClass=group)(cn=" + searchGroup + "))",   // filter
+                SearchControls.SUBTREE_SCOPE,
                 new LdapGroupContextMapper()
         );
 

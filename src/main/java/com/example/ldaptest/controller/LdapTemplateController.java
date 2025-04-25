@@ -10,6 +10,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+    테스트 데이터
+        Active Directory :
+                urls: ldap://192.168.1.101:389
+                base: dc=albee,dc=com
+                username: Administrator@albee.com
+                password: dba3048!01
+        보안그룹 : DevTeam01
+        사용자1 : DevUser01 / dba3048!01
+        사용자2 : DevUser02 / dba3048!01
+        파일공유관리자 : FileShareAdmin / dba3048!01 Administrators그룹에 추가됨
+ */
 @RestController
 @RequestMapping("/ldap/template")
 public class LdapTemplateController {
@@ -70,6 +82,13 @@ public class LdapTemplateController {
     ) {
         return ldapTemplateService.getAdGroup(groupFrom.getGroupId());
     }
+
+    @PostMapping("/group/get-all")
+    public List<LdapGroup> getAllGroups(
+    ) {
+        return ldapTemplateService.getAdAllGroups();
+    }
+
 
     @PostMapping("/group/get-list-by-name")
     public List<LdapGroup> getGroups(

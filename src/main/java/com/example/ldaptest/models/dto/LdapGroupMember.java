@@ -6,10 +6,10 @@ import lombok.Data;
 @Data
 public class LdapGroupMember {
     /*
-    member: cn=Philip J. Fry,ou=people,dc=planetexpress,dc=com
+    member: "CN=Group Policy Creator Owners,CN=Users,DC=albee,DC=com"
      */
-    private String cn;     // cn=Philip J. Fry
-    private String info;   // cn=Philip J. Fry,ou=people,dc=planetexpress,dc=com
+    private String cn;     // cn="Group Policy Creator Owners"
+    private String info;   // info="CN=Group Policy Creator Owners,CN=Users,DC=albee,DC=com"
 
     public LdapGroupMember(String memberInfo) {
         if(!StringUtil.isNullOrEmpty(memberInfo)){
@@ -19,8 +19,9 @@ public class LdapGroupMember {
             for(int i=0; i<memberInfoArray.length; i++){
                 String[] items = memberInfoArray[i].split("=");
                 for(int j=0; j<items.length; j++){
-                    if(items[j].equals("cn")){
-                        this.cn = items[1];
+                    if(items[j].toLowerCase().equals("cn")){
+                        this.cn = items[1]; // 첫번째 cn을 세팅. "CN=Group Policy Creator Owners,CN=Users,DC=albee,DC=com"
+                        break;
                     }
                 }
             }

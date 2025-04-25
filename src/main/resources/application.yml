@@ -32,7 +32,15 @@ server:
 winrm:
   host: 192.168.1.101
   port: 5985
-  username: Administrator
+  username: FileShareAdmin
   password: dba3048!01
   timeout: 60000
+
+ssh:
+  host: 192.168.1.101
+  port: 22
+  username: FileShareAdmin
+  password: dba3048!01
+  timeout: 60000
+  sleeptime: 1000
 
